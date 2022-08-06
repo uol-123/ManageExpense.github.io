@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HK Budget</title>
+    <link rel="icon" type="image/x-icon" href="/images/hklogo.png">  
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="icons/css/fontawesome-5.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <%- include('includes/nav')%>
+    <div class="container my-5">
+      <h1 class="text-center">Current Balance: <%=balance%></h1>
+      <div class="text-center p-2">
+        <a href="/income-expense/add" class="btn btn-success">Add Money</a>
+      </div>
+    </div>
+    <style>
+      footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+    </style>
+    <%- include('includes/footer.ejs')%>
+
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

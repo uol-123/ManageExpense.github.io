@@ -1,0 +1,39 @@
+.custom-btn-info {
+  background-color: hsl(162, 73%, 46%);
+}
+
+.custom-btn-info:hover {
+  background-color: hsl(162, 73%, 40%);
+}
+
+.custom-nav-btn {
+  display: block;
+  margin: 10px auto;
+  width: 145px;
+
+  transition: 0.3s;
+}
+
+.custom-nav-btn:hover {
+  box-shadow: 0px 2px 7px 2px rgb(194, 194, 194);
+}
+
+small {
+  color: rgb(244, 191, 93);
+}
+
+.password-show-hide-btn {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: rgb(74, 74, 74);
+  cursor: pointer;
+}
+
+@media (min-width: 576px) {
+  .custom-nav-btn {
+    margin: 20px auto;
+  }
+}

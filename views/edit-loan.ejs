@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HK Budget</title>
+    <link rel="icon" type="image/x-icon" href="/images/hklogo.png" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/icons/css/fontawesome-5.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+    "
+  >
+    <div>
+      <%- include('includes/nav')%>
+      <div class="container">
+        <h1 class="my-3" style="color: #5d9b88">Loan</h1>
+        <% if(message){%>
+        <div
+          style="max-width: 500px; margin-top: -58px"
+          class="alert mx-auto <%= message.type=='success'? 'alert-success':'alert-danger'%>"
+          role="alert"
+        >
+          <i
+            class="fa <%= message.type=='success'? 'fa-check-circle':'fa-exclamation-triangle'%>"
+          ></i>
+          <%=message.text%>
+          <span class="float-end text-danger close-alert btn p-0"
+            ><i class="fas fa-times"></i
+          ></span>
+        </div>
+        <% }%>
+        <div class="d-flex flex-wrap justify-content-center">
+          <div>
+            <form
+              method="post"
+              action="/loan/edit/<%=loan.id%>"
+              style="width: 370px"
+              class="my-2 mx-auto row shadow bg-light p-3 rounded-3"
+            >
+              <div class="col-12 mt-3">
+                <div class="form-floating">
+                  <input
+                    name="name"
+                    type="text"
+                    placeholder="enter name"
+                    class="form-control form-control-sm"
+                    value="<%=name.val%>"
+                  />
+                  <label for="">Name</label>
+                </div>
+                <small class="text-danger"><%=name.err%></small>
+              </div>
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    name="amount"
+                    type="number"
+                    placeholder="enter email"
+                    class="form-control form-control-sm"
+                    value="<%=amount.val%>"
+                  />
+                  <label for="">Amount</label>
+                </div>
+                <small class="text-danger"><%=amount.err%></small>
+              </div>
+              <div class="col-12 mt-3">
+                <div class="form-floating">
+                  <input
+                    name="loanDate"
+                    type="date"
+                    placeholder="enter date"
+                    class="form-control form-control-sm"
+                    value="<%=loanDate.val%>"
+                  />
+                  <label for="">Loan Date</label>
+                </div>
+                <small class="text-danger"><%=loanDate.err%></small>
+              </div>
+              <div class="col-12 mt-3">
+                <div class="form-floating">
+                  <input
+                    name="loanReturningDate"
+                    type="date"
+                    placeholder="enter date"
+                    class="form-control form-control-sm"
+                    value="<%=loanReturningDate.val%>"
+                  />
+                  <label for="">Loan Returning Date</label>
+                </div>
+                <small class="text-danger"><%=loanReturningDate.err%></small>
+              </div>
+              <div class="col-12 mt-3">
+                <button class="btn w-100 text-light btn-secondary">
+                  Update
+                </button>
+              </div>
+            </form>
+          </div>
+          <% if(loan){%>
+          <div class="flex-fill">
+            <div style="min-width: 300px" class="mx-3 p-3">
+              <h5>Details</h5>
+              <div class="d-flex flex-wrap justify-content-between mt-3">
+                <span>Loan to : </span><br />
+                <span class="w-75 border-bottom px-2"><%= loan.type%> </span>
+              </div>
+              <div class="d-flex flex-wrap justify-content-between mt-3">
+                <span>Name : </span>
+                <span class="w-75 border-bottom px-2"><%= loan.name%></span>
+              </div>
+              <div class="d-flex flex-wrap justify-content-between mt-3">
+                <span>Amount : </span>
+                <span class="w-75 border-bottom px-2"><%= loan.amount%></span>
+              </div>
+              <div class="d-flex flex-wrap justify-content-between mt-3">
+                <span>Loan Date : </span><br />
+                <span class="w-75 border-bottom px-2"
+                  ><%= new Date(loan.loanDate).toDateString()%>
+                </span>
+              </div>
+              <div class="d-flex flex-wrap justify-content-between mt-3">
+                <span>Loan Returning Date : </span><br />
+                <span class="w-75 border-bottom px-2"
+                  ><%= new Date(loan.loanReturningDate).toDateString()%>
+                </span>
+              </div>
+              <div class="d-flex flex-wrap justify-content-between mt-3">
+                <span>Amount / Month : </span>
+                <span class="w-75 border-bottom px-2"
+                  ><%= loan.amountPerMonth%></span
+                >
+              </div>
+
+              <div class="text-end mt-3">
+                <a
+                  href="/loan/delete/<%=loan.id%>"
+                  class="btn ms-3 btn-danger btn-sm"
+                  >Delete</a
+                >
+              </div>
+            </div>
+          </div>
+          <%}%>
+        </div>
+      </div>
+    </div>
+
+    <%- include('includes/footer.ejs')%>
+
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script src="/js/main.js"></script>
+  </body>
+</html>

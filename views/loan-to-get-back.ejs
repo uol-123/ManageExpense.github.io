@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HK Budget</title>
+    <link rel="icon" type="image/x-icon" href="/images/hklogo.png" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/icons/css/fontawesome-5.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+    "
+  >
+    <div>
+      <%- include('includes/nav')%>
+
+      <div class="container my-2">
+        <h1 class="my-3" style="color: #5d9b88">
+          <span
+            class="border-bottom border-success"
+            style="border-width: 5px !important"
+            >Loan To Get Back</span
+          >
+        </h1>
+        <% if(message){%>
+        <div
+          style="max-width: 500px; margin-top: 30px"
+          class="alert mx-auto <%= message.type=='success'? 'alert-success':'alert-danger'%>"
+          role="alert"
+        >
+          <i
+            class="fa <%= message.type=='success'? 'fa-check-circle':'fa-exclamation-triangle'%>"
+          ></i>
+          <%=message.text%>
+          <span class="float-end text-danger close-alert btn p-0"
+            ><i class="fas fa-times"></i
+          ></span>
+        </div>
+        <% }%>
+
+        <h5 class="mt-5 mb-3">
+          All Transactions
+          <a href="/loan/add" class="btn btn-primary btn-sm">
+            <i class="fa fa-plus-circle"></i> New</a
+          >
+        </h5>
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/loan">To Return</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/loan/lend"
+              >To Get Back</a
+            >
+          </li>
+        </ul>
+        <div class="table-responsive">
+          <table class="table table-hover table-light" style="min-width: 900px">
+            <thead class="">
+              <tr>
+                <th>Sr.</th>
+                <th>NAME</th>
+                <th>AMOUNT</th>
+                <th>LOAN DATE</th>
+                <th>LOAN RETURNING DATE</th>
+
+                <th>AMOUNT / MONTH</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% loans.forEach(function(loan,i){%>
+              <tr>
+                <td><%=i+1%></td>
+                <td><%=loan.name%></td>
+                <td><%=loan.amount%></td>
+                <td><%=new Date(loan.loanDate).toDateString()%></td>
+                <td>
+                  <%= loan.loanReturningDate? new
+                  Date(loan.loanReturningDate).toDateString():""%>
+                </td>
+                <td><%=loan.amountPerMonth%></td>
+                <td>
+                  <% if(!loan.billSplitId){%>
+                  <a
+                    href="/loan/edit/<%=loan.id%>"
+                    class="btn btn-warning btn-sm"
+                    ><i class="far fa-edit"></i></a
+                  ><a
+                    href="/loan/delete/lend/<%=loan.id%>"
+                    class="btn ms-3 btn-danger btn-sm"
+                  >
+                    <i class="fa fa-trash"></i
+                  ></a>
+                  <% }%>
+                </td>
+              </tr>
+              <%})%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <%- include('includes/footer.ejs')%>
+
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

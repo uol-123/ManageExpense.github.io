@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HK Budget</title>
+    <link rel="icon" type="image/x-icon" href="/images/hklogo.png">  
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/icons/css/fontawesome-5.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+    "
+  >
+    <div>
+      <%- include('includes/nav')%>
+
+      <div class="container my-2" style="min-height: 420px">
+        <h1 class="my-3" style="color: #d63384">Bill Split</h1>
+        <% if(message){%>
+        <div
+          style="max-width: 500px; margin-top: 30px"
+          class="alert mx-auto <%= message.type=='success'? 'alert-success':'alert-danger'%>"
+          role="alert"
+        >
+          <i
+            class="fa <%= message.type=='success'? 'fa-check-circle':'fa-exclamation-triangle'%>"
+          ></i>
+          <%=message.text%>
+          <span class="float-end text-danger close-alert btn p-0"
+            ><i class="fas fa-times"></i
+          ></span>
+        </div>
+        <% }%>
+
+        <h5 class="mt-5 mb-3">
+          All Transactions
+          <a href="/billsplit/add" class="btn btn-primary btn-sm">
+            <i class="fa fa-plus-circle"></i> New</a
+          >
+        </h5>
+        <div class="table-responsive">
+          <table class="table table-hover table-light" style="min-width: 900px">
+            <thead class="">
+              <tr>
+                <th>Sr.</th>
+                <th width="150px">AMOUNT</th>
+                <th>PURPOSE</th>
+                <th>NAMES</th>
+
+                <th width="150px">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% billsplit.forEach(function(transaction,i){%>
+              <tr>
+                <td><%=i+1%></td>
+                <td><%=transaction.amount%></td>
+                <td><%=transaction.purpose%></td>
+                <td>
+                  <%transaction.members.forEach(function(member,i){%>
+                  <span class="me-3"
+                    ><%=member%>: <%=transaction.dividedAmount%> <%=
+                    i+1<transaction.members.length? ',':'' %></span
+                  >
+                  <%})%>
+                </td>
+
+                <td>
+                  <a
+                    href="/billsplit/edit/<%=transaction.id%>"
+                    class="btn btn-warning btn-sm"
+                    ><i class="far fa-edit"></i></a
+                  >
+                  <!-- btn-warning btn-sm -->
+                  <a
+                    href="/billsplit/delete/<%=transaction.id%>"
+                    class="btn ms-3 btn-danger btn-sm"
+                    ><i class="fa fa-trash"></i></a>
+                </td>
+              </tr>
+              <%})%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <%- include('includes/footer.ejs')%>
+
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

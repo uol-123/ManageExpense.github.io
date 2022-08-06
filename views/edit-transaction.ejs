@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HK Budget</title>
+    <link rel="icon" type="image/x-icon" href="/images/hklogo.png" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/icons/css/fontawesome-5.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+    "
+  >
+    <%- include('includes/nav')%>
+    <div class="container">
+      <% if(message){%>
+      <div
+        style="max-width: 500px; margin-top: -58px"
+        class="alert mx-auto <%= message.type=='success'? 'alert-success':'alert-danger'%>"
+        role="alert"
+      >
+        <i
+          class="fa <%= message.type=='success'? 'fa-check-circle':'fa-exclamation-triangle'%>"
+        ></i>
+        <%=message.text%>
+        <span class="float-end text-danger close-alert btn p-0"
+          ><i class="fas fa-times"></i
+        ></span>
+      </div>
+      <% }%>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div>
+          <form
+            method="post"
+            action="/income-expense/edit/<%=transaction.id%>"
+            style="width: 300px"
+            class="my-2 mx-auto row shadow bg-light p-3 rounded-3"
+          >
+            <div class="col-12">
+              <div class="form-floating">
+                <input
+                  name="amount"
+                  type="number"
+                  placeholder="enter email"
+                  class="form-control form-control-sm"
+                  value="<%=amount.val%>"
+                />
+                <label for="">Amount</label>
+              </div>
+              <small class="text-danger"><%=amount.err%></small>
+            </div>
+            <div class="col-12 mt-3">
+              <div class="form-floating">
+                <textarea
+                  name="description"
+                  placeholder="email"
+                  class="form-control"
+                  rows="20"
+                >
+<%=description.val%></textarea
+                >
+
+                <label for="">Description</label>
+              </div>
+              <small class="text-danger"><%=description.err%></small>
+            </div>
+            <div class="col-12 mt-3">
+              <div class="form-floating">
+                <input
+                  name="date"
+                  type="date"
+                  placeholder="enter date"
+                  class="form-control form-control-sm"
+                  value="<%=date.val%>"
+                />
+                <label for="">Date</label>
+              </div>
+              <small class="text-danger"><%=date.err%></small>
+            </div>
+
+            <div class="col-12 mt-3">
+              <button class="btn w-100 text-light btn-secondary">Update</button>
+            </div>
+          </form>
+        </div>
+        <% if(transaction){%>
+        <div>
+          <div
+            style="min-width: 300px; width: 500px"
+            class="border mx-3 border-success <%= transaction.amount<0?'border-danger':'' %> p-3"
+          >
+            <h5>Details</h5>
+            <div class="d-flex flex-wrap justify-content-between">
+              <span>Amount : </span>
+              <span class="w-75 border-bottom px-2"
+                ><%= transaction.amount%></span
+              >
+            </div>
+            <div class="d-flex flex-wrap justify-content-between mt-3">
+              <span>Description : </span>
+              <span class="w-75 border-bottom px-2"
+                ><%= transaction.description%></span
+              >
+            </div>
+            <div class="d-flex flex-wrap justify-content-between mt-3">
+              <span>Date : </span><br />
+              <span class="w-75 border-bottom px-2"
+                ><%= new Date(transaction.date).toDateString()%>
+              </span>
+            </div>
+            <div class="text-end mt-3">
+              <a
+                href="/income-expense/delete/<%=transaction.id%>"
+                class="btn ms-3 btn-danger btn-sm"
+                >Delete</a
+              >
+            </div>
+          </div>
+        </div>
+        <%}%>
+      </div>
+    </div>
+
+    <%- include('includes/footer.ejs')%>
+
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      const amountInput = document.querySelector(
+        "input[type='number'][name='amount']"
+      );
+
+      if (amountInput.value < 0) {
+        amountInput.value *= -1;
+      }
+
+      amountInput.addEventListener("input", function () {
+        if (this.value < 0) {
+          this.value = 0;
+        }
+      });
+    </script>
+  </body>
+</html>

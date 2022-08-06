@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HK Budget</title>
+    <link rel="icon" type="image/x-icon" href="/images/hklogo.png" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/icons/css/fontawesome-5.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+    "
+  >
+    <div>
+      <%- include('includes/nav')%>
+
+      <div class="container my-2">
+        <h1 class="my-3" style="color: #6f42c1">Income Expense</h1>
+        <% if(message){%>
+        <div
+          style="max-width: 500px; margin-top: 30px"
+          class="alert mx-auto <%= message.type=='success'? 'alert-success':'alert-danger'%>"
+          role="alert"
+        >
+          <i
+            class="fa <%= message.type=='success'? 'fa-check-circle':'fa-exclamation-triangle'%>"
+          ></i>
+          <%=message.text%>
+          <span class="float-end text-danger close-alert btn p-0"
+            ><i class="fas fa-times"></i
+          ></span>
+        </div>
+        <% }%>
+
+        <h5 class="mt-5 mb-3">
+          All Transactions
+          <a href="/income-expense/add/expense" class="btn btn-primary btn-sm">
+            <i class="fa fa-plus-circle"></i> New Expense</a
+          >
+        </h5>
+        <div class="table-responsive">
+          <table class="table table-hover shadow" style="min-width: 900px">
+            <thead class="">
+              <tr>
+                <th>Sr.</th>
+                <th>AMOUNT</th>
+                <th width="150px">DATE</th>
+                <th>TYPE</th>
+                <th>DESCRIPTION</th>
+                <th width="150px">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% transactions.forEach(function(transaction,i){%>
+              <tr <%=transaction.amount<0?'style=background:#ff000029':'style=background:#00800024'%>
+                >
+                <td><%=i+1%></td>
+                <td><%=transaction.amount%></td>
+                <td><%=new Date(transaction.date).toDateString()%></td>
+                <td ><%=transaction.type%></td>
+                <td><%=transaction.description%></td>
+               
+               
+                <td>
+                  <% if(transaction.type=='general'){%>
+                  <a
+                    href="/income-expense/edit/<%=transaction.id%>"
+                    class="btn btn-warning btn-sm"
+                    ><i class="far fa-edit"></i></a
+                  ><a
+                    href="/income-expense/delete/<%=transaction.id%>"
+                    class="btn ms-3 btn-danger btn-sm"
+                    ><i class="fa fa-trash"></i
+                  ></a>
+                  <% }
+                  %>
+                </td>
+             
+              </tr>
+              <%})%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <%- include('includes/footer.ejs')%>
+
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
